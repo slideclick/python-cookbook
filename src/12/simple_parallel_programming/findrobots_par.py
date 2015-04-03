@@ -21,9 +21,9 @@ def find_all_robots(logdir):
     '''
     Find all hosts across and entire sequence of files
     '''
-    files = glob.glob(logdir+"/*.log.gz")
+    files = glob.glob(logdir+"/*.gz")
     all_robots = set()
-    with futures.ProcessPoolExecutor() as pool:
+    with futures.ProcessPoolExecutor(16) as pool:
         for robots in pool.map(find_robots, files):
             all_robots.update(robots)
     return all_robots
